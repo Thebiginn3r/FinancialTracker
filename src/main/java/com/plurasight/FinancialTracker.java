@@ -1,8 +1,10 @@
-package com.pluralsight;
+package com.plurasight;
 
 import com.plurasight.Transaction;
 
+import java.io.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -10,7 +12,7 @@ import java.util.Scanner;
 public class FinancialTracker {
 
     private static ArrayList<Transaction> transactions = new ArrayList<Transaction>();
-    private static final String FILE_NAME = "transactions(1).csv";
+    private static final String FILE_NAME = "transactions (1).csv";
     private static final String DATE_FORMAT = "yyyy-MM-dd";
     private static final String TIME_FORMAT = "HH:mm:ss";
     private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern(DATE_FORMAT);
@@ -54,6 +56,16 @@ public class FinancialTracker {
     }
 
     public static void loadTransactions(String fileName) {
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader("transactions (1).csv"));
+            String line;
+            while ((line = reader.readLine()) != null) {
+                //System.out.println(line);
+            }
+            reader.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         // This method should load transactions from a file with the given file name.
         // If the file does not exist, it should be created.
         // The transactions should be stored in the `transactions` ArrayList.
@@ -65,6 +77,26 @@ public class FinancialTracker {
     }
 
     private static void addDeposit(Scanner scanner) {
+        System.out.print("Enter description: ");
+        String description = scanner.nextLine();
+        System.out.print("Enter the vendor: ");
+        String vendor = scanner.nextLine();
+        System.out.print("Enter deposit amount: ");
+        double amount = scanner.nextDouble();
+        if (amount <= 0) {
+            System.out.println("Invalid input try again");
+            return;
+        }
+        scanner.nextLine();
+        LocalDateTime now = LocalDateTime.now();
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        String date = now.format(dtf);
+        System.out.println(date);
+
+        Transaction deposit = new Transaction(date, description, vendor, amount);
+        transactions.add(deposit);
+        System.out.println();
+
         // This method should prompt the user to enter the date, time, description, vendor, and amount of a deposit.
         // The user should enter the date and time in the following format: yyyy-MM-dd HH:mm:ss
         // The amount should be a positive number.
@@ -73,6 +105,26 @@ public class FinancialTracker {
     }
 
     private static void addPayment(Scanner scanner) {
+        System.out.print("Enter description: ");
+        String description = scanner.nextLine();
+        System.out.print("Enter the vendor: ");
+        String vendor = scanner.nextLine();
+        System.out.print("Enter deposit amount: ");
+        double amount = scanner.nextDouble();
+        double adjustedAmount = amount * -1;
+        if (adjustedAmount >= 0) {
+            System.out.println("Invalid input try again");
+            return;
+        }
+        scanner.nextLine();
+        LocalDateTime now = LocalDateTime.now();
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        String date = now.format(dtf);
+        System.out.println(date);
+
+        Transaction payment = new Transaction(date, description, vendor, amount);
+        transactions.add(payment);
+        System.out.println();
         // This method should prompt the user to enter the date, time, description, vendor, and amount of a payment.
         // The user should enter the date and time in the following format: yyyy-MM-dd HH:mm:ss
         // The amount received should be a positive number then transformed to a negative number.
@@ -116,16 +168,78 @@ public class FinancialTracker {
     }
 
     private static void displayLedger() {
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader("transactions (1).csv"));
+            String line;
+            System.out.printf("%-12s %-10s %-30s %-20s %-10s%n", "Date", "Time", "Description", "Vendor", "Amount");
+            System.out.println("-------------------------------------------------------------------------------------------------------");
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split("\\|");
+                if (parts.length >= 5) {
+                    String date = parts[0];
+                    String time = parts[1];
+                    String description = parts[2];
+                    String vendor = parts[3];
+                    String amount = parts[4];
+
+                    System.out.printf("%-12s %-10s %-30s %-20s %-10s%n", date, time, description, vendor, amount);
+                }
+            }
+            reader.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         // This method should display a table of all transactions in the `transactions` ArrayList.
         // The table should have columns for date, time, description, vendor, and amount.
     }
 
     private static void displayDeposits() {
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader("transactions (1).csv"));
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split("\\|");
+                if (parts.length >= 5) {
+                    try {
+                        double amount = Double.parseDouble(parts[4]);
+                        if (amount > 0) {
+                            System.out.println(line);
+                        }
+                    } catch (NumberFormatException e) {
+                        System.out.println("Invalid number in amount column: " + parts[4]);
+                    }
+                }
+            }
+            reader.close();
+        } catch (IOException e) {
+            System.out.println("Error reading files: " + e.getMessage());
+        }
         // This method should display a table of all deposits in the `transactions` ArrayList.
         // The table should have columns for date, time, description, vendor, and amount.
     }
 
     private static void displayPayments() {
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader("transactions (1).csv"));
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split("\\|");
+                if (parts.length >= 5) {
+                    try {
+                        double amount = Double.parseDouble(parts[4]);
+                        if (amount < 0) {
+                            System.out.println(line);
+                        }
+                    } catch (NumberFormatException e) {
+                        System.out.println("Invalid number in amount column: " + parts[4]);
+                    }
+                }
+            }
+            reader.close();
+        } catch (IOException e) {
+            System.out.println("Error reading files: " + e.getMessage());
+        }
+
         // This method should display a table of all payments in the `transactions` ArrayList.
         // The table should have columns for date, time, description, vendor, and amount.
     }
@@ -146,6 +260,9 @@ public class FinancialTracker {
 
             switch (input) {
                 case "1":
+                    System.out.println("Current Month Report");
+                    filterTransactionsByDate(LocalDate.now().withDayOfMonth(1), LocalDate.now());
+                    break;
                     // Generate a report for all transactions within the current month,
                     // including the date, time, description, vendor, and amount for each transaction.
                 case "2":
