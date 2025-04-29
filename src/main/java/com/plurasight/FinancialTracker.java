@@ -322,6 +322,8 @@ public class FinancialTracker {
 
 
     private static void filterTransactionsByDate(LocalDate startDate, LocalDate endDate) {
+        System.out.println();
+        System.out.println("");
         // This method filters the transactions by date and prints a report to the console.
         // It takes two parameters: startDate and endDate, which represent the range of dates to filter by.
         // The method loops through the transactions list and checks each transaction's date against the date range.
@@ -330,6 +332,28 @@ public class FinancialTracker {
     }
 
     private static void filterTransactionsByVendor(String vendor) {
+
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader("transactions (1).csv"));
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split("\\|");
+                if (parts.length >= 5) {
+                    try {
+                        String vendorLike = parts[3];
+                        if (vendorLike.equalsIgnoreCase(vendor)) {
+                            System.out.println(line);
+                        }
+                    } catch (NumberFormatException e) {
+                        System.out.println("Invalid number in amount column: " + parts[3]);
+                    }
+                }
+            }
+            reader.close();
+        } catch (IOException e) {
+            System.out.println("Error reading files: " + e.getMessage());
+        }
+
         // This method filters the transactions by vendor and prints a report to the console.
         // It takes one parameter: vendor, which represents the name of the vendor to filter by.
         // The method loops through the transactions list and checks each transaction's vendor name against the specified vendor name.
