@@ -89,13 +89,21 @@ public class FinancialTracker {
         }
         scanner.nextLine();
         LocalDateTime now = LocalDateTime.now();
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd|HH:mm:ss");
         String date = now.format(dtf);
         System.out.println(date);
 
         Transaction deposit = new Transaction(date, description, vendor, amount);
         transactions.add(deposit);
         System.out.println();
+        try {
+            BufferedWriter writer = new BufferedWriter(new FileWriter("transactions (1).csv", true));
+            writer.write(deposit.toCSV());
+            writer.newLine();
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         // This method should prompt the user to enter the date, time, description, vendor, and amount of a deposit.
         // The user should enter the date and time in the following format: yyyy-MM-dd HH:mm:ss
@@ -118,13 +126,21 @@ public class FinancialTracker {
         }
         scanner.nextLine();
         LocalDateTime now = LocalDateTime.now();
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd|HH:mm:ss");
         String date = now.format(dtf);
         System.out.println(date);
 
-        Transaction payment = new Transaction(date, description, vendor, amount);
+        Transaction payment = new Transaction(date, description, vendor, adjustedAmount);
         transactions.add(payment);
         System.out.println();
+        try {
+            BufferedWriter writer = new BufferedWriter(new FileWriter("transactions (1).csv", true));
+            writer.write(payment.toCSV());
+            writer.newLine();
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         // This method should prompt the user to enter the date, time, description, vendor, and amount of a payment.
         // The user should enter the date and time in the following format: yyyy-MM-dd HH:mm:ss
         // The amount received should be a positive number then transformed to a negative number.
@@ -266,16 +282,33 @@ public class FinancialTracker {
                     // Generate a report for all transactions within the current month,
                     // including the date, time, description, vendor, and amount for each transaction.
                 case "2":
+                    System.out.println("Previous Month Report");
+                    LocalDate startOfPrevMonth = LocalDate.now().minusMonths(1).withDayOfMonth(1);
+                    LocalDate endOfPrevMonth = startOfPrevMonth.withDayOfMonth(startOfPrevMonth.lengthOfMonth());
+                    filterTransactionsByDate(startOfPrevMonth, endOfPrevMonth);
+                    break;
                     // Generate a report for all transactions within the previous month,
                     // including the date, time, description, vendor, and amount for each transaction.
                 case "3":
+                    System.out.println("Current Year Report");
+                    filterTransactionsByDate(LocalDate.now().withDayOfYear(1), LocalDate.now());
+                    break;
                     // Generate a report for all transactions within the current year,
                     // including the date, time, description, vendor, and amount for each transaction.
 
                 case "4":
+                    System.out.println("Previous Month Report");
+                    LocalDate startOfPrevYear = LocalDate.now().minusYears(1).withDayOfYear(1);
+                    LocalDate endOfPrevYear = LocalDate.of(LocalDate.now().getYear(), 12, 31);
+                    filterTransactionsByDate(startOfPrevYear, endOfPrevYear);
+                    break;
                     // Generate a report for all transactions within the previous year,
                     // including the date, time, description, vendor, and amount for each transaction.
                 case "5":
+                    System.out.print("Enter the vendor name: ");
+                    String vendor = scanner.nextLine();
+                    filterTransactionsByVendor(vendor);
+                    break;
                     // Prompt the user to enter a vendor name, then generate a report for all transactions
                     // with that vendor, including the date, time, description, vendor, and amount for each transaction.
                 case "0":

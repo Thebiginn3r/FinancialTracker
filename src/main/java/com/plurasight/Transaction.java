@@ -13,6 +13,10 @@ public class Transaction {
         this.amount = amount;
     }
 
+    public String toCSV() {
+        return date + "|" + description + "|" + vendor + "|" + amount;
+    }
+
     public String getDate() {
         return date;
     }
