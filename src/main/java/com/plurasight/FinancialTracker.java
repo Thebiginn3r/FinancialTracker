@@ -322,17 +322,40 @@ public class FinancialTracker {
 
 
     private static void filterTransactionsByDate(LocalDate startDate, LocalDate endDate) {
-        System.out.println();
-        System.out.println("");
+        boolean found = false;
+
+        for (Transaction transaction : transactions) {
+            // Parse the date string from the transaction
+            LocalDateTime transactionDateTime = LocalDateTime.parse(
+                    transaction.getDate(), DateTimeFormatter.ofPattern("yyyy-MM-dd|HH:mm:ss")
+            );
+
+            LocalDate transactionDate = transactionDateTime.toLocalDate();
+
+            // Check if the transaction date is within the given range (inclusive)
+            if ((transactionDate.isEqual(startDate) || transactionDate.isAfter(startDate)) &&
+                    (transactionDate.isEqual(endDate) || transactionDate.isBefore(endDate))) {
+
+                // Print the transaction details
+                System.out.println(transaction);
+
+                // Indicate that at least one matching transaction was found
+                found = true;
+            }
+        }
+
+        // If no matching transactions were found
+        if (!found) {
+            System.out.println("No transactions found between those dates.");
+        }
+    }
         // This method filters the transactions by date and prints a report to the console.
         // It takes two parameters: startDate and endDate, which represent the range of dates to filter by.
         // The method loops through the transactions list and checks each transaction's date against the date range.
         // Transactions that fall within the date range are printed to the console.
         // If no transactions fall within the date range, the method prints a message indicating that there are no results.
-    }
 
     private static void filterTransactionsByVendor(String vendor) {
-
         try {
             BufferedReader reader = new BufferedReader(new FileReader("transactions (1).csv"));
             String line;
