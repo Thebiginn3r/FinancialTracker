@@ -1,8 +1,9 @@
 # Financial Tracker
 
-## Description of the Project
+## Track your Payments, Deposits, and a look at a Full Ledger
 
-Briefly describe what this Java console application does. Mention its purpose and who the intended users are. Explain the main functionality and what problems it aims to solve.
+Track your payments and deposits in full detail, date, time, description, vendor and amount. Also included is a ledger where you can search by month, year, and vendor. This makes it easy to keep track of all your exspenses in one location.
+
 
 ![Class Diagram](path/to/your/class_diagram.png)
 
@@ -14,8 +15,10 @@ List the user stories that guided the development of your application. Format th
 - As a user, I want to receive immediate feedback, so I can understand what to do next.
 
 ## Setup
+Start the program by hitting the play button in the upper right of the intellij window
 
-Instructions on how to set up and run the project using IntelliJ IDEA.
+
+
 
 ### Prerequisites
 
