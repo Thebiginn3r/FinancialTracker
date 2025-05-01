@@ -100,15 +100,30 @@ public class FinancialTracker {
         scanner.nextLine();
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd|HH:mm:ss");
         LocalDate date = LocalDate.now();
-        LocalTime time = LocalTime.now();
-
-
+        LocalTime time = LocalTime.now().withNano(0);
         System.out.println(date);
+        System.out.println(time.format(dtf.ofPattern("HH:mm:ss")));
+
+        Transaction newTransaction = new Transaction(date, time, description, vendor, amount);
+        transactions.add(newTransaction);
+
+        String csvLine = String.format("%s|%s|%s|%s|%.2f", date, time.format(dtf.ofPattern("HH:mm:ss")), description, vendor, amount);
+
+        try {
+            BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_NAME, true));
+            writer.write(csvLine);
+            writer.newLine();
+            writer.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
 
         //Transaction transactions = new Transaction(date, time, description, vendor, amount);
-        transactions.add(new Transaction(date, time, description, vendor, amount));
-        System.out.println();
-        
+        //transactions.add(new Transaction(date, time, description, vendor, amount));
+        //System.out.println();
+
         /*try {
             BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_NAME, true));
             writer.write(String.valueOf(transactions));
@@ -140,19 +155,21 @@ public class FinancialTracker {
         scanner.nextLine();
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd|HH:mm:ss");
         LocalDate date = LocalDate.now();
-        LocalTime time = LocalTime.now();
-
-
+        LocalTime time = LocalTime.now().withNano(0);
         System.out.println(date);
+        System.out.println(time.format(dtf.ofPattern("HH:mm:ss")));
 
-        //Transaction transactions = new Transaction(date, time, description, vendor, amount);
-        transactions.add(new Transaction(date, time, description, vendor, amount));
-        System.out.println();
+        Transaction newTransaction = new Transaction(date, time, description, vendor, adjustedAmount);
+        transactions.add(newTransaction);
+
+        String csvLine = String.format("%s|%s|%s|%s|%.2f", date, time.format(dtf.ofPattern("HH:mm:ss")), description, vendor, adjustedAmount);
+
         try {
             BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_NAME, true));
-            writer.write(String.valueOf(transactions));
+            writer.write(csvLine);
             writer.newLine();
             writer.close();
+
         } catch (IOException e) {
             e.printStackTrace();
         }
