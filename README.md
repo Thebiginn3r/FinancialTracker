@@ -11,13 +11,13 @@ Track your payments and deposits in full detail, date, time, description, vendor
 
 List the user stories that guided the development of your application. Format these stories as: "As a [type of user], I want [some goal] so that [some reason]."
 
-- As a user, I want to be able to input my data, so that the application can process it accordingly.
-- As a user, I want to receive immediate feedback, so I can understand what to do next.
+- User wants to be able to see add deposit, make payment, ledger, and exit on the home screen
+- User wants the ledger screen where you can see the options to display all entries, deposits, payments, reports, home.
+- User wants another sub menu in the reports section of the ledger to sort through data by month to date, previous month, ytd, previous year, search by vendor, and have the ability to go back to the ledger
 
 ## Setup
-Start the program by hitting the play button in the upper right of the intellij window
-
-
+Start the program by hitting the play button in the upper right of the Intellij window
+follow the prompts shown in the command 
 
 
 ### Prerequisites
@@ -44,13 +44,15 @@ Follow these steps to get your application running within IntelliJ IDEA:
 
 Include screenshots or GIFs that show your application in action. Use tools like [Giphy Capture](https://giphy.com/apps/giphycapture) to record a GIF of your application.
 
-![Application Screenshot](path/to/your/screenshot.png)
+this ledger shows you a full list of all your transactions
+![Screenshot 2025-04-30 135946.png](Screenshot%202025-04-30%20135946.png)
+
 
 ## Future Work
 
 Outline potential future enhancements or functionalities you might consider adding:
 
-- Additional feature to be developed.
+- If I had time I would add 
 - Improvement of current functionalities.
 
 ## Resources
@@ -60,10 +62,6 @@ List resources such as tutorials, articles, or documentation that helped you dur
 - [Java Programming Tutorial](https://www.example.com)
 - [Effective Java](https://www.example.com)
 
-## Team Members
-
-- **Name 1** - Specific contributions or roles.
-- **Name 2** - Specific contributions or roles.
 
 ## Thanks
 
