@@ -5,11 +5,8 @@
 Track your payments and deposits in full detail, date, time, description, vendor and amount. Also included is a ledger where you can search by month, year, and vendor. This makes it easy to keep track of all your exspenses in one location.
 
 
-![Class Diagram](path/to/your/class_diagram.png)
 
 ## User Stories
-
-List the user stories that guided the development of your application. Format these stories as: "As a [type of user], I want [some goal] so that [some reason]."
 
 - User wants to be able to see add deposit, make payment, ledger, and exit on the home screen
 - User wants the ledger screen where you can see the options to display all entries, deposits, payments, reports, home.
@@ -38,35 +35,29 @@ Follow these steps to get your application running within IntelliJ IDEA:
 ## Technologies Used
 
 - Java: Mention the version you are using.
-- Any additional libraries or frameworks used in the project.
+
 
 ## Demo
 
-Include screenshots or GIFs that show your application in action. Use tools like [Giphy Capture](https://giphy.com/apps/giphycapture) to record a GIF of your application.
-
-this ledger shows you a full list of all your transactions
-![Screenshot 2025-04-30 135946.png](Screenshot%202025-04-30%20135946.png)
+This gif shows the different menus and screens within the app.
+![9smemz.gif](9smemz.gif)
 
 
 ## Future Work
 
-Outline potential future enhancements or functionalities you might consider adding:
+Things I would add if I had the time:
 
-- If I had time I would add 
-- Improvement of current functionalities.
+- Balance tracker to show the current value of the account 
+- Change the colors for titles so it stands out more
 
 ## Resources
 
-List resources such as tutorials, articles, or documentation that helped you during the project.
+These are the resources I used to help me complete this code
 
-- [Java Programming Tutorial](https://www.example.com)
-- [Effective Java](https://www.example.com)
+- [W3 writing to a file](https://www.w3schools.com/java/java_files_create.asp)
+- [W3 Method Structures](https://www.w3schools.com/java/java_methods_param.asp)
 
 
-## Thanks
+## Thanks to
 
-Express gratitude towards those who provided help, guidance, or resources:
-
-- Thank you to [Mentor's Name] for continuous support and guidance.
-- A special thanks to all teammates for their dedication and teamwork.
- 
+All my fellow Year Up teammates for their dedication, teamwork, continuous support, and guidance throughout this project.

@@ -332,6 +332,8 @@ public class FinancialTracker {
 
     private static void filterTransactionsByDate(LocalDate startDate, LocalDate endDate) {
         boolean found = false;
+        System.out.printf("%-12s %-10s %-30s %-20s %-10s%n", "Date", "Time", "Description", "Vendor", "Amount");
+        System.out.println("-------------------------------------------------------------------------------------------------------");
 
         for (Transaction transaction : transactions) {
             // Parse the date string from the transaction
@@ -352,6 +354,7 @@ public class FinancialTracker {
         if (!found) {
             System.out.println("No transactions found between those dates.");
         }
+
     }
         // This method filters the transactions by date and prints a report to the console.
         // It takes two parameters: startDate and endDate, which represent the range of dates to filter by.
